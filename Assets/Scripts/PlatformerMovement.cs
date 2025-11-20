@@ -47,20 +47,21 @@ public class PlatformerMovement : MonoBehaviour
         // Set gravity scale to 0 so player won't "fall" 
         rb.gravityScale = 0;
 
-        //animator = GetComponent<Animator>();
+        //animator = GetComponent<Sprite>();
+        animator.SetBool("isRunning", false);
     }
     
     void Update()
     {
         velocity = TranslateInputToVelocity(moveInput);
-        
+    
         // Apply jump-input:
         if (jumpInput && wasGrounded)
         {
             velocity.y = jumpForce;
             jumpInput = false;
         }
-        
+    
         // Check if character lost contact with ground this frame
         if (wasGrounded == true && isGrounded == false)
         {
@@ -79,16 +80,27 @@ public class PlatformerMovement : MonoBehaviour
             jumpReleased = false;
         }
         wasGrounded = isGrounded;
-        
+    
         // Flip sprite according to direction (if a sprite renderer has been assigned)
         if (spriteRenderer)
         {
             if (moveInput.x > 0.01f)
-                spriteRenderer.flipX = false;
+            {
+                spriteRenderer.flipX = false;  // Move right
+                animator.SetBool("isRunning", true);  // Running right
+            }
             else if (moveInput.x < -0.01f)
-                spriteRenderer.flipX = true;
+            {
+                spriteRenderer.flipX = true;  // Move left
+                animator.SetBool("isRunning", true);  // Running left
+            }
+            else
+            {
+                animator.SetBool("isRunning", false);  // No movement, stop running
+            }
         }
     }
+
 
     private void FixedUpdate()
     {

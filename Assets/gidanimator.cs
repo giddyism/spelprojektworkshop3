@@ -15,12 +15,12 @@ public class gidanimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("e") || (Input.GetKeyDown("d")))
+        if (Input.GetKeyDown("d") || Input.GetKeyDown("a"))
         {
             knightanimator.SetBool("IsRunning", true);
         }
 
-        if (Input.GetKeyUp("e") || (Input.GetKeyUp("d")))
+        if (Input.GetKeyUp("d") || Input.GetKeyDown("a"))
         {
             knightanimator.SetBool("IsRunning", false);
         }
